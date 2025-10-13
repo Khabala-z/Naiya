@@ -1,0 +1,22 @@
+{
+    "name": "Naiya: Comunicación Universal",
+    "short_name": "Naiya App",
+    "description": "Aplicación móvil inclusiva para comunicación y traducción mediante IA, integrando voz, texto y lenguaje de señas.",
+    "start_url": "./index.html", 
+    "display": "standalone",
+    "background_color": "#80DEEA",
+    "theme_color": "#9C27B0",
+    "orientation": "portrait-primary",
+    "icons": [
+        {
+            "src": "assets/icons/icon-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "assets/icons/icon-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}

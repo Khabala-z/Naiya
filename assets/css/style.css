@@ -1,0 +1,481 @@
+/* ==================================== */
+/* 0. Configuración General y Variables */
+/* ==================================== */
+:root {
+    /* Paleta de Colores Naiya (ámbar, cian, rosa, violeta) */
+    --color-amber: #FFC107;
+    --color-cyan: #4FC3F7;
+    --color-pink: #EC407A;
+    --color-purple: #9C27B0;
+
+    /* Gradientes */
+    --gradient-bg: linear-gradient(to bottom, #FFE0B2, #80DEEA); /* Ámbar a Cian (Fondo) */
+    --gradient-ia: linear-gradient(to right, var(--color-pink), var(--color-purple)); /* Rosa a Violeta (Esfera IA) */
+
+    /* Glassmorphism Effect */
+    --glass-background: rgba(255, 255, 255, 0.4);
+    --glass-border: rgba(255, 255, 255, 0.6);
+    --shadow-light: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-strong: 0 10px 15px rgba(0, 0, 0, 0.2);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--gradient-bg);
+    min-height: 100vh;
+}
+
+/* Estilos para simular entorno móvil y centrar la app */
+.app-container {
+    max-width: 420px; /* Ancho típico de un móvil */
+    margin: 0 auto;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(255, 255, 255, 0.2); /* Un toque de glass en el contenedor principal */
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.3);
+    position: relative; /* Necesario para la barra de navegación fija */
+}
+
+/* Estilo Glassmorphism reusable */
+.glass-effect {
+    background: var(--glass-background);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 16px;
+    border: 1px solid var(--glass-border);
+    padding: 15px;
+    box-shadow: var(--shadow-light);
+}
+
+/* ==================================== */
+/* 1. Cabecera (Header) */
+/* ==================================== */
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background: rgba(255, 255, 255, 0.7); /* Cabecera semi-transparente */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.app-title {
+    font-size: 1.8em;
+    font-weight: 700;
+    color: var(--color-purple);
+}
+
+.lang-selector {
+    display: flex;
+    align-items: center;
+}
+
+.lang-selector select {
+    background: transparent;
+    border: 1px solid var(--color-purple);
+    border-radius: 8px;
+    padding: 5px 10px;
+    margin-left: 5px;
+    font-size: 0.9em;
+}
+
+/* ==================================== */
+/* 2. Contenido Principal (Main) */
+/* ==================================== */
+.app-content {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+.view {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding-bottom: 80px; /* Espacio para la barra de navegación */
+}
+
+.view.active {
+    display: flex;
+}
+
+.view-title {
+    font-size: 1.5em;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.view-subtitle {
+    font-size: 0.9em;
+    color: #666;
+    text-align: center;
+}
+
+/* ==================================== */
+/* 2.1. Sección Inicio (IA) */
+/* ==================================== */
+.ia-sphere {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    background: var(--gradient-ia);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 1.2em;
+    font-weight: 600;
+    box-shadow: var(--shadow-strong);
+    margin-top: 30px;
+}
+
+.translation-card {
+    width: 100%;
+    max-width: 350px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.translation-card .status {
+    font-size: 0.85em;
+    font-weight: 500;
+    color: var(--color-purple);
+}
+
+.translation-card .example p {
+    background-color: rgba(0, 0, 0, 0.05);
+    padding: 8px;
+    border-radius: 8px;
+    font-size: 0.9em;
+    color: #555;
+}
+
+.interaction-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.text-input {
+    width: 90%;
+    max-width: 300px;
+    padding: 10px;
+    border: 1px solid var(--color-purple);
+    border-radius: 10px;
+    font-size: 1em;
+    outline: none;
+}
+
+/* ==================================== */
+/* 2.2. Botones Globales */
+/* ==================================== */
+.btn {
+    padding: 10px 15px;
+    border-radius: 12px;
+    font-size: 0.95em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+}
+
+.btn-primary {
+    background-color: var(--color-purple);
+    color: white;
+    box-shadow: 0 3px 5px rgba(156, 39, 176, 0.4);
+}
+
+.btn-primary:hover {
+    background-color: #7B1FA2;
+}
+
+.btn-secondary {
+    background-color: var(--color-pink);
+    color: white;
+    box-shadow: 0 3px 5px rgba(236, 64, 122, 0.4);
+}
+
+.btn-secondary:hover {
+    background-color: #AD1457;
+}
+
+.btn-outline {
+    background-color: transparent;
+    border: 2px solid var(--color-cyan);
+    color: var(--color-cyan);
+}
+
+.btn-outline:hover {
+    background-color: rgba(79, 195, 247, 0.1);
+}
+
+.btn-sm {
+    padding: 6px 10px;
+    font-size: 0.8em;
+    border-radius: 8px;
+}
+
+.btn-full {
+    width: 100%;
+    max-width: 300px;
+}
+
+.btn-danger {
+    background-color: #F44336;
+    color: white;
+}
+
+.mt-1 { margin-top: 10px; }
+.mt-3 { margin-top: 30px; }
+
+/* ==================================== */
+/* 2.3. Sección Comunidad */
+/* ==================================== */
+.video-post {
+    width: 100%;
+    max-width: 350px;
+    margin-bottom: 20px;
+    padding: 0;
+    overflow: hidden;
+}
+
+.post-header {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+    border: 2px solid var(--color-pink); /* Borde de color Naiya */
+}
+
+.username {
+    font-weight: 600;
+    color: #333;
+}
+
+.video-placeholder {
+    width: 100%;
+    height: 200px;
+    background-color: rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2em;
+    color: #666;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.post-details {
+    padding: 10px 15px;
+}
+
+.post-details .word {
+    font-weight: bold;
+    font-size: 1.1em;
+    margin-bottom: 5px;
+}
+
+.post-details .meaning {
+    font-size: 0.9em;
+    color: #666;
+}
+
+.post-actions {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 15px 10px;
+    font-size: 0.9em;
+}
+
+.likes {
+    color: var(--color-pink);
+    font-weight: 500;
+}
+
+.comments {
+    color: var(--color-cyan);
+    font-weight: 500;
+}
+
+
+/* ==================================== */
+/* 2.4. Sección Notas */
+/* ==================================== */
+.note-item {
+    width: 100%;
+    max-width: 350px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.note-content {
+    flex-grow: 1;
+}
+
+.note-type {
+    font-weight: bold;
+    color: var(--color-purple);
+    font-size: 0.9em;
+    margin-bottom: 2px;
+}
+
+.note-text {
+    font-size: 1em;
+    color: #333;
+}
+
+.note-date {
+    font-size: 0.75em;
+    color: #999;
+}
+
+/* ==================================== */
+/* 2.5. Sección Estudio (Gamificación) */
+/* ==================================== */
+.gamification-stats {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    max-width: 350px;
+    margin-bottom: 20px;
+}
+
+.stat-item {
+    text-align: center;
+    font-weight: 500;
+}
+
+.stat-item .icon-trophy {
+    color: var(--color-amber);
+    font-size: 2em;
+}
+
+.stat-item .icon-gamepad {
+    color: var(--color-pink);
+    font-size: 2em;
+}
+
+.course-item {
+    width: 100%;
+    max-width: 350px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.course-name {
+    font-weight: 600;
+    color: #333;
+    flex-grow: 1;
+}
+
+.progress-bar {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 8px;
+    border-radius: 4px;
+    width: 100px;
+    margin-right: 15px;
+}
+
+.progress-bar::-webkit-progress-bar {
+    background-color: #f3f3f3;
+    border-radius: 4px;
+}
+
+.progress-bar::-webkit-progress-value {
+    background-color: var(--color-purple);
+    border-radius: 4px;
+}
+
+/* ==================================== */
+/* 2.6. Sección Ajustes y Accesibilidad */
+/* ==================================== */
+.settings-card {
+    width: 100%;
+    max-width: 350px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.setting-toggle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1em;
+    color: #333;
+}
+
+.setting-toggle input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    accent-color: var(--color-purple); /* Color del checkbox */
+}
+
+/* ==================================== */
+/* 3. Barra de Navegación (Navbar) */
+/* ==================================== */
+.app-navbar {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 420px; /* Igual que el contenedor principal */
+    display: flex;
+    justify-content: space-around;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 8px 0;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.nav-item {
+    background: none;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 0.7em;
+    color: #666;
+    cursor: pointer;
+    padding: 5px 0;
+    transition: color 0.2s ease;
+}
+
+.nav-item.active {
+    color: var(--color-purple);
+    font-weight: 600;
+}
+
+.nav-item span {
+    font-size: 1.5em;
+    margin-bottom: 2px;
+}

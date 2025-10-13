@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Naiya - Comunicación Universal</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#4FC3F7"> </head>
+<body>
+
+    <div id="app-container" class="app-container">
+
+        <header class="app-header">
+            <h1 class="app-title">Naiya</h1>
+            <div class="lang-selector">
+                <span class="icon-globe">🌐</span>
+                <select id="language-select">
+                    <option value="es">Español</option>
+                    <option value="en">Inglés</option>
+                    <option value="nahuatl">Náhuatl</option>
+                    <option value="señas">Lengua de Señas</option>
+                </select>
+            </div>
+        </header>
+
+        <main class="app-content">
+
+            <section id="inicio" class="view active">
+                <div class="ia-sphere">IA Naiya</div>
+                <div class="translation-card glass-effect">
+                    <p class="status">🎧 Modo de traducción en tiempo real activo</p>
+                    <div class="example">
+                        <p>Persona dice: “Good morning!” → Naiya: “¡Buenos días!”</p>
+                        <p>Cámara detecta seña 👋 → Naiya: “Hola, ¿cómo estás?”</p>
+                    </div>
+                </div>
+                <div class="interaction-buttons">
+                    <button id="btn-escribir" class="btn btn-outline">📝 Escribir</button>
+                    <button id="btn-hablar" class="btn btn-primary">🎤 Hablar</button>
+                    <button id="btn-camara" class="btn btn-secondary">📸 Cámara</button>
+                </div>
+                <input type="text" id="text-input" class="text-input" placeholder="Escribe tu mensaje aquí..." style="display: none;">
+            </section>
+
+            <section id="comunidad" class="view hidden">
+                <h2 class="view-title">Comunidad Naiya</h2>
+                <p class="view-subtitle">Descubre videos y comparte tus conocimientos con la comunidad.</p>
+
+                <article class="video-post glass-effect">
+                    <div class="post-header">
+                        <img src="assets/img/avatars/ana_lopez.jpg" alt="Avatar Ana" class="avatar">
+                        <p class="username">Ana López</p>
+                    </div>
+                    <div class="video-placeholder">Video de Tlazohcamati</div>
+                    <div class="post-details">
+                        <p class="word">**Tlazohcamati**</p>
+                        <p class="meaning">Gracias (náhuatl)</p>
+                    </div>
+                    <div class="post-actions">
+                        <span class="likes">❤️ 42</span>
+                        <span class="comments">💬 12 comentarios</span>
+                    </div>
+                </article>
+
+                <button class="btn btn-full btn-primary mt-3">Subir nuevo video</button>
+            </section>
+
+            <section id="notas" class="view hidden">
+                <h2 class="view-title">Mis Notas</h2>
+                <p class="view-subtitle">Guarda palabras, frases o videos de señas para usarlos después con Naiya.</p>
+
+                <div class="note-item glass-effect">
+                    <div class="note-content">
+                        <p class="note-type">📝 Nota</p>
+                        <p class="note-text">Palabra: Tlazohcamati (Gracias)</p>
+                        <p class="note-date">07/10/2025</p>
+                    </div>
+                    <button class="btn btn-sm btn-secondary">Copiar a IA</button>
+                </div>
+
+                <div class="note-item glass-effect">
+                    <div class="note-content">
+                        <p class="note-type">🎥 Video guardado</p>
+                        <p class="note-text">Seña de Hola</p>
+                        <p class="note-date">06/10/2025</p>
+                    </div>
+                    <button class="btn btn-sm btn-secondary">Copiar a IA</button>
+                </div>
+
+                <button class="btn btn-full btn-primary mt-3">Agregar nueva nota</button>
+            </section>
+
+            <section id="estudio" class="view hidden">
+                <h2 class="view-title">Estudio y Aprendizaje</h2>
+                <p class="view-subtitle">Aprende con Naiya, gana puntos y desbloquea logros.</p>
+
+                <div class="gamification-stats">
+                    <div class="stat-item">
+                        <span class="icon-trophy">🏆</span>
+                        <p>Puntos: 320</p>
+                    </div>
+                    <div class="stat-item">
+                        <span class="icon-gamepad">🕹️</span>
+                        <p>Nivel 3 - Explorador</p>
+                    </div>
+                </div>
+
+                <div class="course-item glass-effect">
+                    <p class="course-name">Curso: Lengua de Señas Básico</p>
+                    <progress value="60" max="100" class="progress-bar"></progress>
+                    <button class="btn btn-sm btn-primary">Continuar</button>
+                </div>
+
+                <div class="course-item glass-effect">
+                    <p class="course-name">Juego: Traductor rápido</p>
+                    <button class="btn btn-sm btn-secondary">Jugar</button>
+                </div>
+
+                <button class="btn btn-full btn-primary mt-3">Ver más cursos</button>
+            </section>
+
+            <section id="ajustes" class="view hidden">
+                <h2 class="view-title">Ajustes y Accesibilidad</h2>
+                <div class="settings-card glass-effect">
+                    <label class="setting-toggle">
+                        Notificaciones
+                        <input type="checkbox" checked>
+                    </label>
+                    <label class="setting-toggle">
+                        Modo oscuro
+                        <input type="checkbox">
+                    </label>
+                    <label class="setting-toggle">
+                        Soporte de voz para personas con discapacidad visual [cite: 28]
+                        <input type="checkbox" checked>
+                    </label>
+                    <label class="setting-toggle">
+                        Activar intérprete digital de señas [cite: 28, 29]
+                        <input type="checkbox" checked>
+                    </label>
+                    <button class="btn btn-full btn-primary mt-3">Editar perfil</button>
+                    <button class="btn btn-full btn-danger mt-1">Cerrar sesión</button>
+                </div>
+            </section>
+
+        </main>
+
+        <nav class="app-navbar">
+            <button class="nav-item active" data-view="inicio">
+                <span class="icon-home">🏠</span> Inicio
+            </button>
+            <button class="nav-item" data-view="comunidad">
+                <span class="icon-compass">🧭</span> Comunidad
+            </button>
+            <button class="nav-item" data-view="notas">
+                <span class="icon-note">🗒️</span> Notas
+            </button>
+            <button class="nav-item" data-view="estudio">
+                <span class="icon-book">📚</span> Estudio
+            </button>
+            <button class="nav-item" data-view="ajustes">
+                <span class="icon-settings">⚙️</span> Accesibilidad
+            </button>
+        </nav>
+
+    </div>
+
+    <script src="assets/js/app.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js').then(registration => {
+                    console.log('Service Worker registrado con éxito: ', registration.scope);
+                }).catch(err => {
+                    console.log('Fallo el registro del Service Worker: ', err);
+                });
+            });
+        }
+    </script>
+</body>
+</html>
