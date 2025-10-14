@@ -1282,3 +1282,196 @@ body.dark-mode .btn-outline {
   background: rgba(99, 102, 241, 0.15);
   border: 1px solid rgba(99, 102, 241, 0.4);
 }
+
+/* ===================================
+   CÁMARA - VERSIÓN SIMPLE PARA PROTOTIPO
+   =================================== */
+
+.camera-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  height: 100%;
+}
+
+.camera-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 15px;
+  background: rgba(99, 102, 241, 0.1);
+  border-radius: 12px;
+  border: 1px solid rgba(99, 102, 241, 0.3);
+}
+
+.camera-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.btn-close-camera {
+  background: rgba(239, 68, 68, 0.2);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  color: #ef4444;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  font-size: 1.3rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.btn-close-camera:hover {
+  background: rgba(239, 68, 68, 0.3);
+  transform: scale(1.1);
+}
+
+.camera-view {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #000;
+  aspect-ratio: 4/3;
+}
+
+#camera-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scaleX(-1); /* Efecto espejo */
+}
+
+.camera-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.detection-status {
+  background: rgba(0, 0, 0, 0.8);
+  padding: 25px 30px;
+  border-radius: 16px;
+  text-align: center;
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(99, 102, 241, 0.5);
+  min-width: 250px;
+}
+
+.status-icon {
+  font-size: 4rem;
+  margin-bottom: 15px;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.status-text {
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-bottom: 15px;
+}
+
+.countdown-bar {
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.countdown-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #6366f1, #8b5cf6);
+  width: 0%;
+  border-radius: 4px;
+}
+
+@keyframes countdown {
+  from { width: 0%; }
+  to { width: 100%; }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+}
+
+.gesture-guide {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 15px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.guide-title {
+  font-size: 0.95rem;
+  color: #888;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.guide-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.guide-item {
+  background: rgba(99, 102, 241, 0.1);
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  color: #fff;
+  border: 1px solid rgba(99, 102, 241, 0.2);
+}
+
+/* Modo oscuro */
+.dark-mode .camera-header {
+  background: rgba(99, 102, 241, 0.15);
+  border-color: rgba(99, 102, 241, 0.4);
+}
+
+.dark-mode .gesture-guide {
+  background: rgba(0, 0, 0, 0.3);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.dark-mode .guide-item {
+  background: rgba(99, 102, 241, 0.15);
+  border-color: rgba(99, 102, 241, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .camera-view {
+    border-radius: 12px;
+  }
+  
+  .detection-status {
+    min-width: 200px;
+    padding: 20px 25px;
+  }
+  
+  .status-icon {
+    font-size: 3rem;
+  }
+}
