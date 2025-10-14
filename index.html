@@ -24,14 +24,51 @@
 
             <section id="inicio" class="view active">
                 <div class="ia-sphere">IA<br>Naiya</div>
+                
                 <div class="translation-card glass-effect">
-                    <p class="status">🎧 Modo de traducción en tiempo real activo</p>
-                    <div class="example">
-                        <p>Persona dice: "Good morning!" → Naiya: "¡Buenos días!"</p>
-                        <p>Cámara detecta seña 👋 → Naiya: "Hola, ¿cómo estás?"</p>
+                    <div class="status-header">
+                        <span class="status-icon">🎧</span>
+                        <p class="status">Modo de traducción en tiempo real activo • Conectado a la API de Naiya</p>
+                    </div>
+                    
+                    <!-- Conversación integrada -->
+                    <div class="conversation-box">
+                        <!-- Método de entrada usado -->
+                        <div class="input-method">
+                            <span class="method-icon">🎤</span>
+                            <span class="method-text">Hablar</span>
+                        </div>
+                        
+                        <!-- Lo que dijo la persona -->
+                        <div class="user-message">
+                            <p class="message-label">Persona dice:</p>
+                            <p class="message-text">"Good morning!"</p>
+                        </div>
+                        
+                        <!-- Traducción de Naiya -->
+                        <div class="naiya-translation">
+                            <p class="translation-label">→ Naiya traduce:</p>
+                            <p class="translation-text">"¡Buenos días!"</p>
+                        </div>
+                        
+                        <!-- Línea divisoria -->
+                        <div class="divider"></div>
+                        
+                        <!-- Sugerencias de respuesta -->
+                        <div class="suggestions">
+                            <p class="suggestions-label">Sugerencias de respuesta:</p>
+                            <button class="suggestion-btn">
+                                <p class="suggestion-es">"Buenos días, ¿cómo estás?"</p>
+                                <p class="suggestion-en">→ "Good morning, how are you?"</p>
+                            </button>
+                            <button class="suggestion-btn">
+                                <p class="suggestion-es">"¡Hola! ¿Qué tal tu día?"</p>
+                                <p class="suggestion-en">→ "Hello! How's your day?"</p>
+                            </button>
+                        </div>
                     </div>
                 </div>
-                <input type="text" id="text-input" class="text-input" placeholder="Escribe tu mensaje aquí..." style="display: none;">
+
                 <div class="interaction-buttons">
                     <button id="btn-escribir" class="btn btn-outline">
                         <span class="btn-icon">✏️</span>
@@ -185,7 +222,6 @@
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                // Registro del Service Worker para PWA (offline)
                 navigator.serviceWorker.register('service-worker.js').then(registration => {
                     console.log('Service Worker registrado con éxito: ', registration.scope);
                 }).catch(err => {
