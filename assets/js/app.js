@@ -630,11 +630,153 @@ function useSuggestion(esText, originalText, previousIcon, previousMethod, origi
 // ===========================================
 // 10. SIMULACIÓN DE ENTRADA DE CÁMARA
 // ===========================================
+
+// Variables globales para la cámara
+let videoStream = null;
+let detectionTimeout = null;
+
 function simulateCameraInput() {
-  // Simulación: Seña de Gracias
+  if (!conversationBox) return;
+  
+  conversationBox.innerHTML = `
+    <div class="camera-container">
+      <div class="camera-header">
+        <span class="camera-title">📸 Detección de Señas</span>
+        <button class="btn-close-camera" onclick="stopCamera()">✕</button>
+      </div>
+      
+      <div class="camera-view">
+        <video id="camera-video" autoplay playsinline></video>
+        <div class="camera-overlay">
+          <div class="detection-status">
+            <div class="status-icon">👋</div>
+            <p class="status-text">Haz una seña con tu mano...</p>
+            <div class="countdown-bar">
+              <div class="countdown-fill"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="gesture-guide">
+        <p class="guide-title">Señas disponibles:</p>
+        <div class="guide-list">
+          <div class="guide-item">👋 Mano abierta = Hola</div>
+          <div class="guide-item">👍 Pulgar arriba = ¿Cómo estás?</div>
+        </div>
+      </div>
+    </div>
+  `;
+  
+  startCamera();
+}
+
+async function startCamera() {
+  try {
+    // Solicitar acceso a la cámara
+    videoStream = await navigator.mediaDevices.getUserMedia({ 
+      video: { 
+        facingMode: 'user',
+        width: { ideal: 640 },
+        height: { ideal: 480 }
+      } 
+    });
+    
+    const video = document.getElementById('camera-video');
+    
+    if (!video) {
+      console.error('No se encontró el elemento de video');
+      return;
+    }
+    
+    video.srcObject = videoStream;
+    
+    console.log('✅ Cámara iniciada');
+    
+    // Después de 2 segundos, "detectar" un gesto
+    const statusText = document.querySelector('.status-text');
+    const countdownFill = document.querySelector('.countdown-fill');
+    
+    if (statusText) {
+      statusText.textContent = 'Detectando... 2 segundos';
+    }
+    
+    // Animar barra de countdown
+    if (countdownFill) {
+      countdownFill.style.animation = 'countdown 2s linear forwards';
+    }
+    
+    detectionTimeout = setTimeout(() => {
+      detectRandomGesture();
+    }, 2000);
+    
+  } catch (error) {
+    console.error('❌ Error al acceder a la cámara:', error);
+    
+    let errorMessage = 'No se pudo acceder a la cámara';
+    let errorDetails = '';
+    
+    if (error.name === 'NotAllowedError') {
+      errorMessage = 'Permiso de cámara denegado';
+      errorDetails = 'Ve a la configuración de tu navegador y permite el acceso a la cámara';
+    } else if (error.name === 'NotFoundError') {
+      errorMessage = 'No se encontró cámara';
+      errorDetails = 'Verifica que tu dispositivo tenga una cámara disponible';
+    } else {
+      errorDetails = 'Intenta recargar la página';
+    }
+    
+    conversationBox.innerHTML = `
+      <div class="error-message">
+        <span class="error-icon">⚠️</span>
+        <p class="error-title">${errorMessage}</p>
+        <p class="error-details">${errorDetails}</p>
+        <button class="retry-btn" onclick="document.getElementById('btn-camara').click()">
+          🔄 Intentar de nuevo
+        </button>
+      </div>
+    `;
+  }
+}
+
+function detectRandomGesture() {
+  // Simular detección aleatoria de gestos
+  const gestures = [
+    { text: 'Seña detectada: Mano abierta 👋', translation: 'Hola' },
+    { text: 'Seña detectada: Pulgar arriba 👍', translation: '¿Cómo estás?' }
+  ];
+  
+  const randomGesture = gestures[Math.floor(Math.random() * gestures.length)];
+  
+  // Mostrar resultado antes de cerrar
+  const statusIcon = document.querySelector('.status-icon');
+  const statusText = document.querySelector('.status-text');
+  
+  if (statusIcon && statusText) {
+    statusIcon.textContent = '✅';
+    statusText.textContent = 'Seña detectada!';
+    statusText.style.color = '#10b981';
+  }
+  
+  // Detener cámara y procesar
   setTimeout(() => {
-    handleTranslation('Seña de "Gracias" (Manos cruzadas sobre el pecho)', 'señas');
-  }, 2000);
+    stopCamera();
+    handleTranslation(randomGesture.text, 'señas');
+  }, 800);
+}
+
+function stopCamera() {
+  if (detectionTimeout) {
+    clearTimeout(detectionTimeout);
+    detectionTimeout = null;
+  }
+  
+  if (videoStream) {
+    videoStream.getTracks().forEach(track => track.stop());
+    videoStream = null;
+  }
+  
+  console.log('📷 Cámara detenida');
 }
 
 // ===========================================
