@@ -2,21 +2,25 @@
 /* 0. Configuración General y Variables */
 /* ==================================== */
 :root {
-    /* Paleta de Colores Naiya (ámbar, cian, rosa, violeta) */
-    --color-amber: #FFC107;
-    --color-cyan: #4FC3F7;
-    --color-pink: #EC407A;
-    --color-purple: #9C27B0;
+    /* Paleta de Colores Naiya (Minimalista Refinado) */
+    --color-ia: #00d4ff; 
+    --color-accent: #00d4ff; 
+    --color-trophy: #FFC107; 
+    
+    /* Modos de Color Base (Modo Claro - Default) */
+    --color-bg-primary: #FFFFFF;
+    --color-bg-secondary: #f8f9fa;
+    --color-text-primary: #2d3748;
+    --color-text-secondary: #718096;
 
     /* Gradientes */
-    --gradient-bg: linear-gradient(to bottom, #FFE0B2, #80DEEA); /* Ámbar a Cian (Fondo) */
-    --gradient-ia: linear-gradient(to right, var(--color-pink), var(--color-purple)); /* Rosa a Violeta (Esfera IA) */
+    --gradient-ia: radial-gradient(circle at 30% 30%, #64ffda, #00d4ff); 
 
     /* Glassmorphism Effect */
-    --glass-background: rgba(255, 255, 255, 0.4);
-    --glass-border: rgba(255, 255, 255, 0.6);
-    --shadow-light: 0 4px 6px rgba(0, 0, 0, 0.1);
-    --shadow-strong: 0 10px 15px rgba(0, 0, 0, 0.2);
+    --glass-background: #f8f9fa;
+    --glass-border: rgba(200, 200, 200, 0.3);
+    --shadow-light: 0 4px 15px rgba(0, 0, 0, 0.05);
+    --shadow-strong: 0 10px 40px rgba(0, 212, 255, 0.4);
 }
 
 * {
@@ -26,66 +30,106 @@
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: var(--gradient-bg);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+    background: #f5f5f5;
     min-height: 100vh;
+    transition: background-color 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /* Estilos para simular entorno móvil y centrar la app */
 .app-container {
-    max-width: 420px; /* Ancho típico de un móvil */
-    margin: 0 auto;
+    max-width: 420px;
+    width: 100%;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    background-color: rgba(255, 255, 255, 0.2); /* Un toque de glass en el contenedor principal */
-    box-shadow: 0 0 25px rgba(0, 0, 0, 0.3);
-    position: relative; /* Necesario para la barra de navegación fija */
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.1);
+    position: relative;
+    background: var(--color-bg-primary);
+    transition: background-color 0.3s ease;
 }
 
 /* Estilo Glassmorphism reusable */
 .glass-effect {
     background: var(--glass-background);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border-radius: 16px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 20px;
     border: 1px solid var(--glass-border);
-    padding: 15px;
+    padding: 20px;
     box-shadow: var(--shadow-light);
+    transition: all 0.3s ease;
 }
 
 /* ==================================== */
-/* 1. Cabecera (Header) */
+/* 1. Cabecera (Header) - Limpio y Sólido */
 /* ==================================== */
 .app-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 20px;
-    background: rgba(255, 255, 255, 0.7); /* Cabecera semi-transparente */
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    padding: 20px 25px;
+    background: transparent;
+    transition: background-color 0.3s, box-shadow 0.3s;
 }
 
 .app-title {
-    font-size: 1.8em;
+    font-size: 28px;
     font-weight: 700;
-    color: var(--color-purple);
+    color: var(--color-text-primary);
+    letter-spacing: 0.5px;
 }
 
-.lang-selector {
-    display: flex;
-    align-items: center;
+/* 1.1. SWITCH TOGGLE (Modo Oscuro/Claro) */
+.switch-toggle {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 32px;
 }
 
-.lang-selector select {
-    background: transparent;
-    border: 1px solid var(--color-purple);
-    border-radius: 8px;
-    padding: 5px 10px;
-    margin-left: 5px;
-    font-size: 0.9em;
+.switch-toggle input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--color-ia);
+    transition: .3s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 24px;
+    width: 24px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .3s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+input:checked + .slider:before {
+    transform: translateX(28px);
+}
+
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
 }
 
 /* ==================================== */
@@ -94,7 +138,7 @@ body {
 .app-content {
     flex-grow: 1;
     overflow-y: auto;
-    padding: 20px;
+    padding: 20px 25px 100px;
 }
 
 .view {
@@ -102,7 +146,18 @@ body {
     flex-direction: column;
     align-items: center;
     gap: 20px;
-    padding-bottom: 80px; /* Espacio para la barra de navegación */
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { 
+        opacity: 0; 
+        transform: translateY(10px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    }
 }
 
 .view.active {
@@ -110,34 +165,50 @@ body {
 }
 
 .view-title {
-    font-size: 1.5em;
-    font-weight: 600;
-    color: #333;
-    margin-bottom: 5px;
-}
-
-.view-subtitle {
-    font-size: 0.9em;
-    color: #666;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-bottom: 8px;
+    transition: color 0.3s;
     text-align: center;
 }
 
-/* ==================================== */
+.view-subtitle {
+    font-size: 14px;
+    color: var(--color-text-secondary);
+    text-align: center;
+    transition: color 0.3s;
+    margin-bottom: 20px;
+}
+
 /* 2.1. Sección Inicio (IA) */
-/* ==================================== */
 .ia-sphere {
-    width: 180px;
-    height: 180px;
+    width: 200px;
+    height: 200px;
     border-radius: 50%;
-    background: var(--gradient-ia);
+    background: var(--gradient-ia); 
+    box-shadow: var(--shadow-strong); 
     display: flex;
     justify-content: center;
     align-items: center;
     color: white;
-    font-size: 1.2em;
-    font-weight: 600;
-    box-shadow: var(--shadow-strong);
-    margin-top: 30px;
+    font-size: 24px;
+    font-weight: 700;
+    margin: 40px auto 30px;
+    line-height: 1.3;
+    text-align: center;
+    animation: pulse 3s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { 
+        transform: scale(1); 
+        box-shadow: 0 10px 40px rgba(0, 212, 255, 0.4); 
+    }
+    50% { 
+        transform: scale(1.05); 
+        box-shadow: 0 15px 50px rgba(0, 212, 255, 0.6); 
+    }
 }
 
 .translation-card {
@@ -150,101 +221,142 @@ body {
 }
 
 .translation-card .status {
-    font-size: 0.85em;
-    font-weight: 500;
-    color: var(--color-purple);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: 5px;
 }
 
 .translation-card .example p {
-    background-color: rgba(0, 0, 0, 0.05);
-    padding: 8px;
-    border-radius: 8px;
-    font-size: 0.9em;
-    color: #555;
+    background-color: var(--color-bg-primary);
+    padding: 12px 15px;
+    border-radius: 12px;
+    font-size: 14px;
+    color: var(--color-text-primary);
+    transition: all 0.3s;
+    line-height: 1.5;
+    border-left: 3px solid var(--color-ia);
+    margin-bottom: 10px;
+}
+
+.translation-card .example p:last-child {
+    margin-bottom: 0;
 }
 
 .interaction-buttons {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     gap: 10px;
-    flex-wrap: wrap;
-    justify-content: center;
+    width: 100%;
+    max-width: 350px;
+    margin-bottom: 15px;
 }
 
 .text-input {
-    width: 90%;
-    max-width: 300px;
-    padding: 10px;
-    border: 1px solid var(--color-purple);
-    border-radius: 10px;
-    font-size: 1em;
+    width: 100%;
+    max-width: 350px;
+    padding: 15px;
+    border: 2px solid #e2e8f0;
+    border-radius: 16px;
+    font-size: 15px;
     outline: none;
+    color: var(--color-text-primary);
+    background-color: var(--color-bg-secondary);
+    transition: all 0.3s ease;
 }
 
-/* ==================================== */
+.text-input:focus {
+    border-color: var(--color-ia);
+    box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.1);
+}
+
 /* 2.2. Botones Globales */
-/* ==================================== */
 .btn {
-    padding: 10px 15px;
-    border-radius: 12px;
-    font-size: 0.95em;
+    padding: 12px 10px;
+    border-radius: 14px;
+    font-size: 13px;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
     border: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
 }
 
 .btn-primary {
-    background-color: var(--color-purple);
+    background-color: var(--color-ia);
     color: white;
-    box-shadow: 0 3px 5px rgba(156, 39, 176, 0.4);
+    box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
 }
 
 .btn-primary:hover {
-    background-color: #7B1FA2;
+    background-color: #00bfe6;
+    box-shadow: 0 6px 20px rgba(0, 212, 255, 0.4);
+    transform: translateY(-2px);
 }
 
 .btn-secondary {
-    background-color: var(--color-pink);
+    background-color: var(--color-ia);
     color: white;
-    box-shadow: 0 3px 5px rgba(236, 64, 122, 0.4);
+    box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
 }
 
 .btn-secondary:hover {
-    background-color: #AD1457;
+    background-color: #00bfe6;
+    box-shadow: 0 6px 20px rgba(0, 212, 255, 0.4);
+    transform: translateY(-2px);
 }
 
 .btn-outline {
-    background-color: transparent;
-    border: 2px solid var(--color-cyan);
-    color: var(--color-cyan);
+    background-color: var(--color-ia); 
+    border: none; 
+    color: white;
+    box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
 }
 
 .btn-outline:hover {
-    background-color: rgba(79, 195, 247, 0.1);
+    background-color: #00bfe6;
+    box-shadow: 0 6px 20px rgba(0, 212, 255, 0.4);
+    transform: translateY(-2px);
 }
 
 .btn-sm {
-    padding: 6px 10px;
-    font-size: 0.8em;
-    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 13px;
+    border-radius: 10px;
 }
 
 .btn-full {
     width: 100%;
-    max-width: 300px;
+    max-width: 350px;
+    justify-content: center;
 }
 
 .btn-danger {
     background-color: #F44336;
     color: white;
+    box-shadow: 0 4px 15px rgba(244, 67, 54, 0.3);
+}
+
+.btn-danger:hover {
+    background-color: #d32f2f;
+    transform: translateY(-2px);
 }
 
 .mt-1 { margin-top: 10px; }
-.mt-3 { margin-top: 30px; }
+.mt-3 { margin-top: 20px; }
 
-/* ==================================== */
+/* Icono de botón */
+.btn-icon {
+    font-size: 18px;
+}
+
 /* 2.3. Sección Comunidad */
-/* ==================================== */
 .video-post {
     width: 100%;
     max-width: 350px;
@@ -256,79 +368,77 @@ body {
 .post-header {
     display: flex;
     align-items: center;
-    padding: 10px 15px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+    padding: 15px;
+    border-bottom: 1px solid var(--glass-border);
 }
 
 .avatar {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    object-fit: cover;
-    margin-right: 10px;
-    border: 2px solid var(--color-pink); /* Borde de color Naiya */
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    margin-right: 12px;
 }
 
 .username {
     font-weight: 600;
-    color: #333;
+    color: var(--color-text-primary);
 }
 
 .video-placeholder {
     width: 100%;
     height: 200px;
-    background-color: rgba(0, 0, 0, 0.1);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 1.2em;
-    color: #666;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+    font-size: 16px;
+    font-weight: 600;
+    color: white;
+    transition: background-color 0.3s;
 }
 
 .post-details {
-    padding: 10px 15px;
+    padding: 15px;
 }
 
 .post-details .word {
-    font-weight: bold;
-    font-size: 1.1em;
+    font-weight: 700;
+    font-size: 18px;
     margin-bottom: 5px;
+    color: var(--color-text-primary);
 }
 
 .post-details .meaning {
-    font-size: 0.9em;
-    color: #666;
+    font-size: 14px;
+    color: var(--color-text-secondary);
 }
 
 .post-actions {
     display: flex;
     justify-content: space-between;
-    padding: 0 15px 10px;
-    font-size: 0.9em;
+    padding: 0 15px 15px;
+    font-size: 14px;
 }
 
 .likes {
-    color: var(--color-pink);
-    font-weight: 500;
+    color: var(--color-text-secondary);
+    font-weight: 600;
 }
 
 .comments {
-    color: var(--color-cyan);
-    font-weight: 500;
+    color: var(--color-text-secondary);
+    font-weight: 600;
 }
 
-
-/* ==================================== */
 /* 2.4. Sección Notas */
-/* ==================================== */
 .note-item {
     width: 100%;
     max-width: 350px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 }
 
 .note-content {
@@ -336,46 +446,52 @@ body {
 }
 
 .note-type {
-    font-weight: bold;
-    color: var(--color-purple);
-    font-size: 0.9em;
-    margin-bottom: 2px;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    font-size: 15px;
+    margin-bottom: 8px;
 }
 
 .note-text {
-    font-size: 1em;
-    color: #333;
+    font-size: 14px;
+    color: var(--color-text-secondary);
+    margin-top: 8px;
 }
 
 .note-date {
-    font-size: 0.75em;
-    color: #999;
+    font-size: 12px;
+    color: var(--color-text-secondary);
+    margin-top: 5px;
 }
 
-/* ==================================== */
 /* 2.5. Sección Estudio (Gamificación) */
-/* ==================================== */
 .gamification-stats {
     display: flex;
     justify-content: space-around;
     width: 100%;
     max-width: 350px;
     margin-bottom: 20px;
+    text-align: center;
 }
 
 .stat-item {
     text-align: center;
-    font-weight: 500;
+    font-weight: 600;
+    color: var(--color-text-primary);
 }
 
 .stat-item .icon-trophy {
-    color: var(--color-amber);
-    font-size: 2em;
+    color: var(--color-trophy); 
+    font-size: 32px;
+    display: block;
+    margin-bottom: 8px;
 }
 
 .stat-item .icon-gamepad {
-    color: var(--color-pink);
-    font-size: 2em;
+    color: var(--color-ia); 
+    font-size: 32px;
+    display: block;
+    margin-bottom: 8px;
 }
 
 .course-item {
@@ -389,7 +505,7 @@ body {
 
 .course-name {
     font-weight: 600;
-    color: #333;
+    color: var(--color-text-primary);
     flex-grow: 1;
 }
 
@@ -403,18 +519,16 @@ body {
 }
 
 .progress-bar::-webkit-progress-bar {
-    background-color: #f3f3f3;
+    background-color: #E0E0E0;
     border-radius: 4px;
 }
 
 .progress-bar::-webkit-progress-value {
-    background-color: var(--color-purple);
+    background-color: var(--color-ia); 
     border-radius: 4px;
 }
 
-/* ==================================== */
 /* 2.6. Sección Ajustes y Accesibilidad */
-/* ==================================== */
 .settings-card {
     width: 100%;
     max-width: 350px;
@@ -427,14 +541,38 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 1em;
-    color: #333;
+    font-size: 15px;
+    color: var(--color-text-primary);
+    font-weight: 600;
 }
 
 .setting-toggle input[type="checkbox"] {
     width: 20px;
     height: 20px;
-    accent-color: var(--color-purple); /* Color del checkbox */
+    accent-color: var(--color-ia);
+}
+
+.setting-toggle select,
+.setting-item select {
+    width: 100%;
+    background: transparent;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 12px;
+    font-size: 14px;
+    color: var(--color-text-primary);
+    margin-top: 8px;
+}
+
+.setting-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.setting-item label {
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: 8px;
 }
 
 /* ==================================== */
@@ -446,15 +584,14 @@ body {
     left: 50%;
     transform: translateX(-50%);
     width: 100%;
-    max-width: 420px; /* Igual que el contenedor principal */
+    max-width: 420px; 
     display: flex;
     justify-content: space-around;
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
-    padding: 8px 0;
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+    background: var(--color-bg-primary);
+    border-top: 1px solid var(--glass-border);
+    padding: 12px 0 20px;
+    box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.05);
+    transition: background-color 0.3s;
 }
 
 .nav-item {
@@ -463,19 +600,106 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    font-size: 0.7em;
-    color: #666;
+    gap: 4px;
+    font-size: 11px;
+    color: var(--color-text-secondary);
     cursor: pointer;
-    padding: 5px 0;
-    transition: color 0.2s ease;
-}
-
-.nav-item.active {
-    color: var(--color-purple);
-    font-weight: 600;
+    padding: 8px 12px;
+    transition: all 0.3s ease;
+    border-radius: 12px;
 }
 
 .nav-item span {
-    font-size: 1.5em;
-    margin-bottom: 2px;
+    font-size: 24px;
+}
+
+.nav-item.active {
+    color: var(--color-ia);
+    font-weight: 600;
+}
+
+.nav-item:hover {
+    background-color: rgba(0, 212, 255, 0.05);
+}
+
+/* Iconos específicos */
+.icon-home, .icon-compass, .icon-note, .icon-book, .icon-settings {
+    display: block;
+}
+
+/* ==================================== */
+/* Z. LOGICA MODO OSCURO (DARK MODE) */
+/* ==================================== */
+body.dark-mode {
+    background: #0a0e27;
+}
+
+body.dark-mode .app-container {
+    --color-bg-primary: #1a1f3a;
+    --color-bg-secondary: #252b4a;
+    --color-text-primary: #e2e8f0;
+    --color-text-secondary: #a0aec0;
+    --glass-background: #252b4a;
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --shadow-light: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Ajustes de Elementos Clave en Modo Oscuro */
+body.dark-mode .app-header,
+body.dark-mode .app-navbar {
+    background: #1a1f3a;
+}
+
+body.dark-mode .app-navbar {
+    box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode .app-title {
+    color: var(--color-ia);
+}
+
+body.dark-mode .nav-item {
+    color: #718096;
+}
+
+body.dark-mode .nav-item.active {
+    color: var(--color-ia);
+}
+
+body.dark-mode .translation-card .example p {
+    background-color: #1a1f3a;
+    color: #cbd5e0;
+}
+
+body.dark-mode .text-input {
+    background-color: #252b4a; 
+    color: #e2e8f0; 
+    border: 2px solid #3d4563; 
+}
+
+body.dark-mode .text-input:focus {
+    border-color: var(--color-ia);
+}
+
+body.dark-mode .setting-toggle select,
+body.dark-mode .setting-item select {
+    border: 2px solid #3d4563;
+    color: #e2e8f0; 
+}
+
+body.dark-mode .btn-primary,
+body.dark-mode .btn-secondary {
+    background: var(--color-ia);
+    color: #1a1f3a;
+}
+
+body.dark-mode .btn-outline {
+    background: var(--color-ia);
+    border: none;
+    color: #1a1f3a;
+}
+
+/* Utilities */
+.hidden {
+    display: none !important;
 }
