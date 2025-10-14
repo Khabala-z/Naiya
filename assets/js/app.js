@@ -534,8 +534,23 @@ function simulateAITranslation(input, type) {
   }
   // --- SEÑAS ---
   else if (type === 'señas') {
-    translation = "Gesto interpretado: '¿Cómo puedo ayudarte?'";
-    originalLang = "en";
+    // Detectar tipo de seña por el texto
+    if (inputLower.includes('mano abierta') || inputLower.includes('👋')) {
+      translation = "Hola";
+      originalLang = "en";
+    } else if (inputLower.includes('pulgar arriba') || inputLower.includes('👍')) {
+      translation = "¿Cómo estás?";
+      originalLang = "en";
+    } else if (inputLower.includes('victoria') || inputLower.includes('✌️')) {
+      translation = "Gracias";
+      originalLang = "en";
+    } else if (inputLower.includes('ok') || inputLower.includes('👌')) {
+      translation = "De nada";
+      originalLang = "en";
+    } else {
+      translation = "Gesto interpretado: '¿Cómo puedo ayudarte?'";
+      originalLang = "en";
+    }
   }
   // --- FALLBACK ---
   else {
@@ -740,10 +755,16 @@ async function startCamera() {
 }
 
 function detectRandomGesture() {
-  // Simular detección aleatoria de gestos
+  // Simular detección aleatoria de gestos con traducciones específicas
   const gestures = [
-    { text: 'Seña detectada: Mano abierta 👋', translation: 'Hola' },
-    { text: 'Seña detectada: Pulgar arriba 👍', translation: '¿Cómo estás?' }
+    { 
+      text: 'Seña: Mano abierta 👋', 
+      gesture: 'hello'
+    },
+    { 
+      text: 'Seña: Pulgar arriba 👍', 
+      gesture: 'how_are_you'
+    }
   ];
   
   const randomGesture = gestures[Math.floor(Math.random() * gestures.length)];
@@ -758,11 +779,52 @@ function detectRandomGesture() {
     statusText.style.color = '#10b981';
   }
   
-  // Detener cámara y procesar
+  // Detener cámara y procesar con traducción específica
   setTimeout(() => {
     stopCamera();
-    handleTranslation(randomGesture.text, 'señas');
+    handleSignLanguageTranslation(randomGesture.text, randomGesture.gesture);
   }, 800);
+}
+
+// Nueva función específica para traducción de señas
+function handleSignLanguageTranslation(signText, gestureType) {
+  let translation = '';
+  let suggestions = [];
+  
+  // Traducción y sugerencias específicas según el gesto
+  switch(gestureType) {
+    case 'hello':
+      translation = 'Hola';
+      suggestions = [
+        { es: 'Hola, ¿cómo estás?', original: 'Hello, how are you?' },
+        { es: 'Mucho gusto', original: 'Nice to meet you' },
+        { es: '¿En qué puedo ayudarte?', original: 'How can I help you?' }
+      ];
+      break;
+      
+    case 'how_are_you':
+      translation = '¿Cómo estás?';
+      suggestions = [
+        { es: 'Estoy bien, gracias', original: "I'm fine, thank you" },
+        { es: 'Muy bien, ¿y tú?', original: 'Very well, and you?' },
+        { es: 'Todo tranquilo', original: 'All good' }
+      ];
+      break;
+      
+    default:
+      translation = 'Seña no reconocida';
+      suggestions = [
+        { es: '¿Puedes repetir?', original: 'Can you repeat?' },
+        { es: 'No entendí', original: "I didn't understand" },
+        { es: 'Intenta de nuevo', original: 'Try again' }
+      ];
+  }
+  
+  // Procesar como entrada de señas
+  setTimeout(() => {
+    speakText(translation, 'es-ES');
+    processInput(signText, '📸', 'Cámara', translation, suggestions, 'en');
+  }, 300);
 }
 
 function stopCamera() {
