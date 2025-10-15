@@ -6,6 +6,7 @@
     <title>Naiya - Comunicación Universal</title>
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="assets/css/community.css">
     <meta name="theme-color" content="#00d4ff"> 
 </head>
 <body>
@@ -85,27 +86,54 @@
                 </div>
             </section>
 
-            <section id="comunidad" class="view hidden">
-                <h2 class="view-title">Comunidad Naiya</h2>
-                <p class="view-subtitle">Descubre videos y comparte tus conocimientos con la comunidad.</p>
+           <!-- Reemplaza la sección de comunidad en tu index.html con esto -->
 
-                <article class="video-post glass-effect">
-                    <div class="post-header">
-                        <div class="avatar"></div>
-                        <p class="username">Ana López</p>
-                    </div>
-                    <div class="video-placeholder">Video de Tlazohcamati</div>
-                    <div class="post-details">
-                        <p class="word">Tlazohcamati</p>
-                        <p class="meaning">Gracias (náhuatl)</p>
-                    </div>
-                    <div class="post-actions">
-                        <span class="likes">❤️ 42</span>
-                        <span class="comments">💬 12 comentarios</span>
-                    </div>
-                </article>
+        <section id="comunidad" class="view hidden">
+            <h2 class="view-title">Comunidad Naiya</h2>
+            <p class="view-subtitle">Descubre videos y comparte tus conocimientos con la comunidad.</p>
 
-                <button class="btn btn-full btn-primary mt-3">Subir nuevo video</button>
+            <!-- Contenedor de posts de video -->
+            <div id="video-posts-container">
+                <!-- Los posts se generarán dinámicamente aquí -->
+            </div>
+
+            <button class="btn btn-full btn-primary mt-3" id="btn-upload-video">
+                <span class="btn-icon">📹</span>
+                Subir nuevo video
+            </button>
+        </section>
+
+        <!-- Modal para ver video completo -->
+        <div id="video-modal" class="modal">
+            <div class="modal-content glass-effect">
+                <span class="close-modal">&times;</span>
+                <div id="modal-video-container"></div>
+                <div class="modal-video-info">
+                    <h3 id="modal-word"></h3>
+                    <p id="modal-meaning"></p>
+                    <p id="modal-username"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal para comentarios -->
+        <div id="comments-modal" class="modal">
+            <div class="modal-content glass-effect">
+                <span class="close-modal">&times;</span>
+                <h3 class="modal-title">Comentarios</h3>
+                
+                <div id="comments-list" class="comments-list">
+                    <!-- Los comentarios se cargarán aquí -->
+                </div>
+                
+                <div class="comment-input-container">
+                    <textarea id="comment-input" placeholder="Escribe tu comentario..." rows="3"></textarea>
+                    <button id="btn-post-comment" class="btn btn-primary">Publicar</button>
+                </div>
+            </div>
+        </div>
+
+                
             </section>
 
             <section id="notas" class="view hidden">
@@ -230,5 +258,6 @@
             });
         }
     </script>
+    <script src="assets/js/community.js"></script>
 </body>
 </html>
